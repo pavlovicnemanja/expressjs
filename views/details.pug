@@ -1,0 +1,58 @@
+extends layout
+
+block content
+    if author
+        div(class="row")
+            div(class="col-12")
+                div(class="jumbotron px-0 pb-0")
+                    h1(class="display-4")= author.name + ', ' + author.role
+                    p(class="lead")= author.biography
+                    hr(class="my-4")
+                    p= 'Number of movies: ' + author.movies.length
+                    p= 'Born on: ' + author.birthday
+
+            div(class="col-12 mt-2")
+                h3 Movies
+                table(class="table table-striped")
+                    thead(class="thead-light")
+                        tr
+                            th #
+                            th Name
+                            th Genre
+                            th Rating
+                            th Total Amount Earned
+                            th
+
+                    tbody
+                        each val, index in author.movies
+                            tr
+                                td= index+1
+                                td= val.name
+                                td= val.genre
+                                td= val.rating
+                                td= val.earned + ' $'
+                                td
+                                    a(href="/movies/" + val.id) More details
+                        else
+                            tr
+                                td(colspan=7) No Movies for this author!
+
+            div(class="col-12 text-center")
+                <a href="/" class="btn btn-outline-secondary">Get back</a>
+    
+    if movie
+        div(class="row")
+            div(class="col-12")
+                div(class="jumbotron px-0 pb-0")
+                    h1(class="display-4")= movie.name
+                    p(class="lead")= movie.description
+                    hr(class="my-4")
+                    p= 'Genre: ' + movie.genre + ', IMDB Rating: ' + movie.rating + ', Earned: ' + movie.earned
+
+            div(class="col-12")
+                h3 Author
+                p= movie.Author.name + ', ' + movie.Author.role
+                p= movie.Author.biography
+
+            div(class="col-12 text-center")
+                <a href="/" class="btn btn-outline-secondary">Get back</a>

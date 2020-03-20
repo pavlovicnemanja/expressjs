@@ -1,0 +1,135 @@
+extends layout
+
+block content
+    div(class="row")
+        div(class="col-12")
+            div(class="jumbotron px-0")
+                h1(class="display-4") Hi Guys!
+                p(class="lead") My name is Nemanja Pavlovic, Full-Stack developer! Hopefully you will be happy with my design and implementation :)
+                hr(class="my-4")
+                p This is small app for adding movies and movie authors. Also you can get full informations about movie, and also you can get all movies from one author.
+                p Also, for easier preview, I connected mysql database from my server and fullfilled it with some informations. But fill free to change configuration in `config/config.json`
+                p For database ORM I used Sequelize library, and for live reloading and easier development I configured Nodemon. Just run it with `npm run dev` command.
+                p Sorry for little delay, Covid-19 isolation took me some time to set my home office properly! Pray for China, Italy, Spain and others!
+                p Cheers from Serbia! (heart)
+
+        // - Authors Section
+        div(class="col-12")
+            h3 Authors
+            table(class="table table-striped")
+                thead(class="thead-light")
+                    tr
+                        th #
+                        th Name
+                        th Birthday
+                        th Role
+                        th
+
+                tbody
+                    each val, index in authors
+                        tr
+                            td= index+1
+                            td= val.name
+                            td= val.birthday
+                            td= val.role
+                            td
+                                a(href="/authors/" + val.id) More details
+                    else
+                        tr
+                            td(colspan=5) No Authors added!
+
+            button(class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addAuthorModal") Add author
+
+            div(class="modal" id="addAuthorModal" tabindex="-1")
+                div(class="modal-dialog modal-lg")
+                    form(class="modal-content modal-form" method="POST" action="/api/author")
+                        div(class="modal-header")
+                            h5(class="modal-title") New Author
+                        div(class="modal-body")
+                            div(class="form-group")
+                                label Name *
+                                input(type="text" name="name" class="form-control" placeholder="Name of author" required)
+
+                            div(class="form-group")
+                                label Role
+                                input(type="text" name="role" class="form-control" placeholder="Director, Producer ...")
+
+                            div(class="form-group")
+                                label Birthday
+                                input(type="date" name="birthday" class="form-control", placeholder="Birthday of author")
+
+                            div(class="form-group")
+                                label Biography
+                                textarea(class="form-control", name="biography" placeholder="Short biography")
+
+                        div(class="modal-footer")
+                            button(class="btn btn-success" type="submit") Save
+                            button(class="btn btn-secondary" data-dismiss="modal") Close
+
+        // - Movies Section
+        div(class="col-12 mt-5")
+            h3 Movies
+            table(class="table table-striped")
+                thead(class="thead-light")
+                    tr
+                        th #
+                        th Name
+                        th Author
+                        th Genre
+                        th Rating
+                        th Total Amount Earned
+                        th
+
+                tbody
+                    each val, index in movies
+                        tr
+                            td= index+1
+                            td= val.name
+                            td= val.Author.name
+                            td= val.genre
+                            td= val.rating
+                            td= '$ ' + val.earned
+                            td
+                                a(href="/movies/" + val.id) More details
+                    else
+                        tr
+                            td(colspan=7) No Movies added!
+
+            button(class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addMovieModal") Add movie
+
+            div(class="modal" id="addMovieModal" tabindex="-1")
+                div(class="modal-dialog modal-lg")
+                    form(class="modal-content modal-form" method="POST" action="/api/movie")
+                        div(class="modal-header")
+                            h5(class="modal-title") New Movie
+                        div(class="modal-body")
+                            div(class="form-group")
+                                label Name *
+                                input(type="text" name="name" class="form-control" placeholder="Name of movie" required)
+
+                            div(class="form-group")
+                                label Author *
+                                select(name="authorId" class="form-control" placeholder="Movie author" required)
+                                    option(disabled) Movie author
+                                    each author in authors
+                                        option(value=author.id)= author.name
+
+                            div(class="form-group")
+                                label Genre
+                                input(type="text" name="genre" class="form-control" placeholder="Action, Horror ...")
+
+                            div(class="form-group")
+                                label Description
+                                textarea(class="form-control", name="description" placeholder="Movie plot (spoiler alert!)")
+
+                            div(class="form-group")
+                                label Rating
+                                input(type="number" min=1 max=10 class="form-control", name="rating" placeholder="Movie rating on IMDB")
+
+                            div(class="form-group")
+                                label Earned
+                                input(type="number" class="form-control", name="earned" placeholder="Movie earned in $")
+
+                        div(class="modal-footer")
+                            button(class="btn btn-success" type="submit") Save
+                            button(class="btn btn-secondary" data-dismiss="modal") Close

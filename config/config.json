@@ -1,0 +1,26 @@
+{
+    "development": {
+        "username": "expressjs_test",
+        "password": "AWNDr1MZkrXw1xz7",
+        "database": "expressjs_test",
+        "host": "sql151.your-server.de",
+        "dialect": "mysql",
+        "operatorsAliases": false
+    },
+    "test": {
+        "username": "expressjs_test",
+        "password": "AWNDr1MZkrXw1xz7",
+        "database": "expressjs_test",
+        "host": "sql151.your-server.de",
+        "dialect": "mysql",
+        "operatorsAliases": false
+    },
+    "production": {
+        "username": "expressjs_test",
+        "password": "AWNDr1MZkrXw1xz7",
+        "database": "expressjs_test",
+        "host": "sql151.your-server.de",
+        "dialect": "mysql",
+        "operatorsAliases": false
+    }
+}
